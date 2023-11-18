@@ -1,7 +1,12 @@
+using MyASPCore.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//menambahkan DI 
+builder.Services.AddSingleton<IEmployee,InMemoryEmployeeRepository>();
 
 var app = builder.Build();
 

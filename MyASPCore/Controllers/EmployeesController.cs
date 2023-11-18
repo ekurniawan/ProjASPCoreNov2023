@@ -6,28 +6,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyASPCore.Models;
+using MyASPCore.Repository;
 
 namespace MyASPCore.Controllers
 {
     public class EmployeesController : Controller
     {
-        public EmployeesController()
+        private readonly IEmployee _employees;
+        public EmployeesController(IEmployee employees)
         {
+            _employees = employees;
         }
 
         public IActionResult Index()
         {
-            List<Employee> employees = new List<Employee>{
-                new Employee{EmployeeID=1,FirstName="Scott",LastName="Guthrie",Email="scott@gmail.com"},
-                new Employee{EmployeeID=2,FirstName="Anders",LastName="Helsjberg",Email="anders@gmail.com"}
-            };
-
-            var lstNama = new string[] { "erick", "scott", "budi" };
-            //return Content("Hello ASP Core 8");
-            ViewData["username"] = "ekurniawan";
-            ViewData["nama"] = lstNama;
-            ViewBag.Address = "jogja";
-            return View(employees);
+            var models = _employees.GetAll();
+            return View(models);
         }
 
         public IActionResult Create()
