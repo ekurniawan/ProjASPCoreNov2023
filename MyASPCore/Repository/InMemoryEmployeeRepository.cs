@@ -52,6 +52,7 @@ namespace MyASPCore.Repository
 
         public void Insert(Employee obj)
         {
+            obj.EmployeeID = employees.OrderByDescending(e => e.EmployeeID).FirstOrDefault().EmployeeID + 1;
             employees.Add(obj);
         }
 

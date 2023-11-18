@@ -12,6 +12,12 @@
             <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
         </div>
         <div class="card-body">
+            @if (ViewData["pesan"] != null)
+            {
+                @Html.Raw(ViewData["pesan"])
+            }
+
+            <a asp-action="Create" class="btn btn-primary btn-sm">Create Employee</a>
             <table class="table table-striped">
                 <tr>
                     <td>ID</td>

@@ -21,6 +21,10 @@ namespace MyASPCore.Controllers
 
         public IActionResult Index()
         {
+            if (TempData["pesan"] != null)
+            {
+                ViewData["pesan"] = $"<div class='alert alert-success alert-dismissible'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Success!</strong>{TempData["pesan"]}</div>";
+            }
             var employees = _employees.GetAll();
             List<EmployeeViewModel> models = new List<EmployeeViewModel>();
             foreach (var emp in employees)
@@ -38,6 +42,28 @@ namespace MyASPCore.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(EmployeeCreateViewModel employeeCreateVM)
+        {
+            try
+            {
+                Employee employee = new Employee
+                {
+                    FirstName = employeeCreateVM.FirstName,
+                    LastName = employeeCreateVM.LastName,
+                    Email = employeeCreateVM.Email
+                };
+                _employees.Insert(employee);
+
+                TempData["pesan"] = $"Data Employee {employee.FirstName} has added";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
         }
 
     }
