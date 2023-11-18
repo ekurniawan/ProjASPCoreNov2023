@@ -59,9 +59,34 @@ namespace MyASPCore.Controllers
             }
         }
 
+
+        [HttpPost]
+        [ActionName("Edit")]
+        public IActionResult EditPost(EmployeeEditViewModel employeeEditVM)
+        {
+            try
+            {
+                var editEmployee = new Employee
+                {
+                    EmployeeID = employeeEditVM.EmployeeID,
+                    FirstName = employeeEditVM.FirstName,
+                    LastName = employeeEditVM.LastName,
+                    Email = employeeEditVM.Email
+                };
+                _employees.Update(editEmployee);
+
+                TempData["pesan"] = $"Data Employee {editEmployee.FirstName} has updated";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (System.Exception ex)
+            {
+                ViewData["error"] = $"<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Error!</strong>{ex.Message}</div>";
+                return View();
+            }
+        }
+
         public IActionResult Create()
         {
-
             return View();
         }
 

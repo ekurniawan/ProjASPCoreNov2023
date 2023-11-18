@@ -15,21 +15,21 @@
         }
         <form asp-action="Edit">
             <div class="mb-3">
-                <label for="EmployeeID" class="form-label">Employee ID:</label>
+                <label asp-for="EmployeeID" class="form-label">Employee ID:</label>
                 <input asp-for="EmployeeID" class="form-control" readonly>
             </div>
             <div class="mb-3">
-                <label for="FirstName" class="form-label">FirstName:</label>
+                <label asp-for="FirstName" class="form-label"></label>
                 <input asp-for="FirstName" class="form-control" placeholder="Enter FirstName">
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label for="LastName" class="form-label">LastName:</label>
+                <label asp-for="LastName" class="form-label"></label>
                 <input asp-for="LastName" class="form-control" placeholder="Enter LastName">
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label for="Email" class="form-label">Email:</label>
+                <label asp-for="Email" class="form-label"></label>
                 <input asp-for="Email" class="form-control" placeholder="Enter Email">
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
