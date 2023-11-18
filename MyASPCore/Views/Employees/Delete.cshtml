@@ -1,0 +1,31 @@
+@model MyASPCore.ViewModels.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="card shadow mb-4 col-md-6">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Delete Employees</h6>
+    </div>
+    <div class="card-body">
+        @if (ViewData["error"] != null)
+        {
+            @Html.Raw(ViewData["error"])
+        }
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="@Model.EmployeeID" />
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label"></label>
+                <input asp-for="FirstName" class="form-control" placeholder="Enter FirstName">
+            </div>
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label"></label>
+                <input asp-for="LastName" class="form-control" placeholder="Enter LastName">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</div>

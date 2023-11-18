@@ -85,6 +85,42 @@ namespace MyASPCore.Controllers
             }
         }
 
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var deleteEmployee = _employees.GetById(id);
+                EmployeeViewModel model = new EmployeeViewModel
+                {
+                    EmployeeID = deleteEmployee.EmployeeID,
+                    FirstName = deleteEmployee.FirstName,
+                    LastName = deleteEmployee.LastName
+                };
+                return View(model);
+            }
+            catch (System.Exception ex)
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeletePost(int id)
+        {
+            try
+            {
+                _employees.Delete(id);
+                TempData["pesan"] = $"Data Employee has deleted";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (System.Exception ex)
+            {
+                ViewData["error"] = $"<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Error!</strong>{ex.Message}</div>";
+                return View();
+            }
+        }
+
         public IActionResult Create()
         {
             return View();
