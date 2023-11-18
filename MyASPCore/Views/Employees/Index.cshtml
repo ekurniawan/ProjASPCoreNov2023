@@ -1,4 +1,4 @@
-@model IEnumerable<MyASPCore.Models.Employee>
+@model IEnumerable<MyASPCore.ViewModels.EmployeeViewModel>
 
 @{
     //Layout = "_LayoutStartbootstrap";
@@ -17,7 +17,6 @@
                     <td>ID</td>
                     <td>FirstName</td>
                     <td>LastName</td>
-                    <td>Email</td>
                 </tr>
 
                 @foreach (var emp in Model)
@@ -26,10 +25,8 @@
                         <td>@emp.EmployeeID</td>
                         <td>@emp.FirstName</td>
                         <td>@emp.LastName</td>
-                        <td>@emp.Email</td>
                     </tr>
                 }
-
             </table>
         </div>
     </div>

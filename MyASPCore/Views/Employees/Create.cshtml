@@ -1,6 +1,25 @@
 @{
     ViewData["Title"] = "Create Employee";
 }
-
-<h3>Create Employee</h3>
-<p>Create Employee</p>
+<div class="card shadow mb-4 col-md-6">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Create Employees</h6>
+    </div>
+    <div class="card-body">
+        <form action="/action_page.php" method="POST">
+            <div class="mb-3">
+                <label for="FirstName" class="form-label">FirstName:</label>
+                <input type="text" class="form-control" placeholder="Enter FirstName" name="FirstName">
+            </div>
+            <div class="mb-3">
+                <label for="LastName" class="form-label">LastName:</label>
+                <input type="text" class="form-control" placeholder="Enter LastName" name="LastName">
+            </div>
+            <div class="mb-3">
+                <label for="Email" class="form-label">Email:</label>
+                <input type="text" class="form-control" placeholder="Enter Email" name="FirstName">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

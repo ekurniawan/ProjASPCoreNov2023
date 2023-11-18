@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyASPCore.Models;
 using MyASPCore.Repository;
+using MyASPCore.ViewModels;
 
 namespace MyASPCore.Controllers
 {
@@ -20,7 +21,17 @@ namespace MyASPCore.Controllers
 
         public IActionResult Index()
         {
-            var models = _employees.GetAll();
+            var employees = _employees.GetAll();
+            List<EmployeeViewModel> models = new List<EmployeeViewModel>();
+            foreach (var emp in employees)
+            {
+                models.Add(new EmployeeViewModel
+                {
+                    EmployeeID = emp.EmployeeID,
+                    FirstName = emp.FirstName,
+                    LastName = emp.LastName
+                });
+            }
             return View(models);
         }
 
