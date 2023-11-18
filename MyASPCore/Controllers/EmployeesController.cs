@@ -41,12 +41,18 @@ namespace MyASPCore.Controllers
 
         public IActionResult Create()
         {
+
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(EmployeeCreateViewModel employeeCreateVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             try
             {
                 Employee employee = new Employee
@@ -62,6 +68,7 @@ namespace MyASPCore.Controllers
             }
             catch (Exception ex)
             {
+                ViewData["error"] = $"<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Error!</strong>{ex.Message}</div>";
                 return View();
             }
         }
