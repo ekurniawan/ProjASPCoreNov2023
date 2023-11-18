@@ -39,6 +39,26 @@ namespace MyASPCore.Controllers
             return View(models);
         }
 
+        public IActionResult Edit(int id)
+        {
+            try
+            {
+                var editEmployee = _employees.GetById(id);
+                EmployeeEditViewModel model = new EmployeeEditViewModel
+                {
+                    EmployeeID = editEmployee.EmployeeID,
+                    FirstName = editEmployee.FirstName,
+                    LastName = editEmployee.LastName,
+                    Email = editEmployee.Email
+                };
+                return View(model);
+            }
+            catch (System.Exception ex)
+            {
+                return View();
+            }
+        }
+
         public IActionResult Create()
         {
 

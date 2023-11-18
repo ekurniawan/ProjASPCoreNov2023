@@ -23,6 +23,8 @@
                     <td>ID</td>
                     <td>FirstName</td>
                     <td>LastName</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                 </tr>
 
                 @foreach (var emp in Model)
@@ -31,6 +33,9 @@
                         <td>@emp.EmployeeID</td>
                         <td>@emp.FirstName</td>
                         <td>@emp.LastName</td>
+                        <td><a asp-action="Edit" asp-route-id="@emp.EmployeeID" class="btn btn-warning btn-sm">edit</a></td>
+                        <td><a asp-action="Delete" asp-route-id="@emp.EmployeeID" class="btn btn-danger btn-sm">delete</a>
+                        </td>
                     </tr>
                 }
             </table>
