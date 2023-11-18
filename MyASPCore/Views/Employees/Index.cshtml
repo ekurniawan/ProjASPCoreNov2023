@@ -1,0 +1,62 @@
+@model IEnumerable<MyASPCore.Models.Employee>
+
+@{
+    Layout = "_LayoutStartbootstrap";
+    ViewData["Title"] = "Employee List";
+    string telp = "99999";
+    var lstNama = (string[])ViewData["nama"];
+}
+
+<div class="row">
+    <div class="card shadow mb-4 col-md-6">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Username</h6>
+        </div>
+        <div class="card-body">
+            <p>Username: @ViewData["username"]</p>
+
+            <ul>
+                @foreach (var nama in lstNama)
+                {
+                    <li>@nama</li>
+                }
+            </ul><br />
+
+        </div>
+    </div>
+
+    <div class="card shadow mb-4 col-md-6">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
+        </div>
+        <div class="card-body">
+
+
+            <table class="table table-striped">
+                <tr>
+                    <td>ID</td>
+                    <td>FirstName</td>
+                    <td>LastName</td>
+                    <td>Email</td>
+                </tr>
+
+                @foreach (var emp in Model)
+                {
+                    <tr>
+                        <td>@emp.EmployeeID</td>
+                        <td>@emp.FirstName</td>
+                        <td>@emp.LastName</td>
+                        <td>@emp.Email</td>
+                    </tr>
+                }
+
+            </table>
+
+
+            <p>Address: @ViewBag.Address</p>
+            <p>Telp: @telp</p>
+            <p>Workshop ASP Core</p>
+        </div>
+    </div>
+
+</div>
