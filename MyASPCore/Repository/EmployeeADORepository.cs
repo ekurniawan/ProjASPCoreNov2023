@@ -22,7 +22,25 @@ namespace MyASPCore.Repository
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string strSql = @"delete Employees where EmployeeID=@EmployeeID";
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.AddWithValue("@EmployeeID", id);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new Exception($"{sqlEx.Number} - {sqlEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"{ex.Message}");
+                }
+            }
         }
 
         public IEnumerable<Employee> GetAll()
@@ -53,7 +71,27 @@ namespace MyASPCore.Repository
 
         public Employee GetById(int id)
         {
-            throw new NotImplementedException();
+            Employee employee = new Employee();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string strSql = @"select * from Employees 
+                                  where EmployeeID=@EmployeeID";
+
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.AddWithValue("@EmployeeID", id);
+
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    dr.Read();
+                    employee.EmployeeID = Convert.ToInt32(dr["EmployeeID"]);
+                    employee.FirstName = dr["FirstName"].ToString();
+                    employee.LastName = dr["LastName"].ToString();
+                    employee.Email = dr["Email"].ToString();
+                }
+            }
+            return employee;
         }
 
         public IEnumerable<Employee> GetByName()
@@ -63,12 +101,54 @@ namespace MyASPCore.Repository
 
         public void Insert(Employee obj)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string strSql = @"insert into Employees(FirstName,LastName,Email) values(@FirstName,@LastName,@Email)";
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.AddWithValue("@FirstName", obj.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", obj.LastName);
+                cmd.Parameters.AddWithValue("@Email", obj.Email);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new Exception($"{sqlEx.Number} - {sqlEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"{ex.Message}");
+                }
+            }
         }
 
         public void Update(Employee obj)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string strSql = @"update Employees set FirstName=@FirstName,LastName=@LastName,@Email=@Email 
+                                  where EmployeeID=@EmployeeID";
+                SqlCommand cmd = new SqlCommand(strSql, conn);
+                cmd.Parameters.AddWithValue("@FirstName", obj.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", obj.LastName);
+                cmd.Parameters.AddWithValue("@Email", obj.Email);
+                cmd.Parameters.AddWithValue("@EmployeeID", obj.EmployeeID);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new Exception($"{sqlEx.Number} - {sqlEx.Message}");
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"{ex.Message}");
+                }
+            }
         }
     }
 }
