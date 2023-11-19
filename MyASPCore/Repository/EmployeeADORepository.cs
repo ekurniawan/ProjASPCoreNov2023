@@ -91,6 +91,10 @@ namespace MyASPCore.Repository
                     employee.LastName = dr["LastName"].ToString();
                     employee.Email = dr["Email"].ToString();
                 }
+                else
+                {
+                    throw new Exception($"Data Employee {id} tidak ditemukan");
+                }
             }
             return employee;
         }
@@ -127,29 +131,41 @@ namespace MyASPCore.Repository
 
         public void Update(Employee obj)
         {
-            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            try
             {
-                string strSql = @"update EmployeesXX set FirstName=@FirstName,LastName=@LastName,@Email=@Email 
+                var result = GetById(obj.EmployeeID);
+
+                using (SqlConnection conn = new SqlConnection(GetConnStr()))
+                {
+                    string strSql = @"update Employees set FirstName=@FirstName,LastName=@LastName,@Email=@Email 
                                   where EmployeeID=@EmployeeID";
-                SqlCommand cmd = new SqlCommand(strSql, conn);
-                cmd.Parameters.AddWithValue("@FirstName", obj.FirstName);
-                cmd.Parameters.AddWithValue("@LastName", obj.LastName);
-                cmd.Parameters.AddWithValue("@Email", obj.Email);
-                cmd.Parameters.AddWithValue("@EmployeeID", obj.EmployeeID);
-                try
-                {
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-                catch (SqlException sqlEx)
-                {
-                    throw new Exception($"{sqlEx.Number} - {sqlEx.Message}");
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"{ex.Message}");
+                    SqlCommand cmd = new SqlCommand(strSql, conn);
+                    cmd.Parameters.AddWithValue("@FirstName", obj.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", obj.LastName);
+                    cmd.Parameters.AddWithValue("@Email", obj.Email);
+                    cmd.Parameters.AddWithValue("@EmployeeID", obj.EmployeeID);
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        throw new Exception($"{sqlEx.Number} - {sqlEx.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception($"{ex.Message}");
+                    }
                 }
             }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+
+
         }
 
         public void ProcessPayroll()
@@ -171,7 +187,7 @@ namespace MyASPCore.Repository
                         FirstName = "EmployeeUpdate1",
                         LastName = "EmployeeYpdate1",
                         Email = "employee1@gmail.com",
-                        EmployeeID = 1
+                        EmployeeID = 20
                     };
                     Update(empUpdate1);
 
