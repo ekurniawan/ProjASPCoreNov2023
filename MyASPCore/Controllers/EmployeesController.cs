@@ -39,6 +39,12 @@ namespace MyASPCore.Controllers
             return View(models);
         }
 
+        public IActionResult EmployeeWithDepartment()
+        {
+            var empWithDepartment = _employees.GetEmployeeWithDepartment();
+            return View(empWithDepartment);
+        }
+
         public IActionResult Edit(int id)
         {
             try

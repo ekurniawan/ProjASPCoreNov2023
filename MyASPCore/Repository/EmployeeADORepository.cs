@@ -233,5 +233,10 @@ namespace MyASPCore.Repository
                 }
             }
         }
+
+        public IEnumerable<EmployeeWithDepartment> GetEmployeeWithDepartment()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

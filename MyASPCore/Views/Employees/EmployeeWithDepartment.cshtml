@@ -1,0 +1,47 @@
+@model IEnumerable<MyASPCore.Models.EmployeeWithDepartment>
+
+@{
+    ViewData["Title"] = "EmployeeWithDepartment";
+}
+
+<div class="row">
+    <div class="card shadow mb-4 col-md-10">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Employee With Department</h6>
+        </div>
+        <div class="card-body">
+            @if (ViewData["pesan"] != null)
+            {
+                @Html.Raw(ViewData["pesan"])
+            }
+
+            <a asp-action="Create" class="btn btn-primary btn-sm">Create Employee</a>
+            <table class="table table-striped">
+                <tr>
+                    <td>ID</td>
+                    <td>FirstName</td>
+                    <td>LastName</td>
+                    <td>Email</td>
+                    <td>Department Name</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                @foreach (var emp in Model)
+                {
+                    <tr>
+                        <td>@emp.EmployeeID</td>
+                        <td>@emp.FirstName</td>
+                        <td>@emp.LastName</td>
+                        <td>@emp.Email</td>
+                        <td>@emp.DepartmentName</td>
+                        <td><a asp-action="Edit" asp-route-id="@emp.EmployeeID" class="btn btn-warning btn-sm">edit</a></td>
+                        <td><a asp-action="Delete" asp-route-id="@emp.EmployeeID" class="btn btn-danger btn-sm">delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+</div>

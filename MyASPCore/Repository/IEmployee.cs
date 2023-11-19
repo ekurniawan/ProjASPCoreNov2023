@@ -9,6 +9,8 @@ namespace MyASPCore.Repository
     public interface IEmployee : ICrud<Employee>
     {
         IEnumerable<Employee> GetByName();
+
+        IEnumerable<EmployeeWithDepartment> GetEmployeeWithDepartment();
         void ProcessPayroll();
     }
 }

@@ -50,6 +50,11 @@ namespace MyASPCore.Repository
             throw new NotImplementedException();
         }
 
+        public IEnumerable<EmployeeWithDepartment> GetEmployeeWithDepartment()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Insert(Employee obj)
         {
             obj.EmployeeID = employees.OrderByDescending(e => e.EmployeeID).FirstOrDefault().EmployeeID + 1;

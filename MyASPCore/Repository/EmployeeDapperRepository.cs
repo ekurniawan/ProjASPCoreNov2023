@@ -110,5 +110,15 @@ namespace MyASPCore.Repository
                 }
             }
         }
+
+        public IEnumerable<EmployeeWithDepartment> GetEmployeeWithDepartment()
+        {
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string strSql = @"select * from EmployeeWithDepartmentView";
+                var results = conn.Query<EmployeeWithDepartment>(strSql);
+                return results;
+            }
+        }
     }
 }
