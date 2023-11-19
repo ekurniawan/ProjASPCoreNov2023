@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.Data.SqlClient;
@@ -168,6 +169,29 @@ namespace MyASPCore.Repository
 
         }
 
+        public void InsertBatch()
+        {
+            StringBuilder sb = new StringBuilder();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                for (int i = 1; i <= 10; i++)
+                {
+                    sb.Append($"insert into Employees(FirstName,LastName,Email) values('FirstName{i}','LastName{i}','Email{i}@gmail.com');");
+                }
+
+                SqlCommand cmd = new SqlCommand(sb.ToString(), conn);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new Exception(sqlEx.Message);
+                }
+            }
+        }
+
         public void ProcessPayroll()
         {
             using (TransactionScope scope = new TransactionScope())
@@ -187,7 +211,7 @@ namespace MyASPCore.Repository
                         FirstName = "EmployeeUpdate1",
                         LastName = "EmployeeYpdate1",
                         Email = "employee1@gmail.com",
-                        EmployeeID = 20
+                        EmployeeID = 1
                     };
                     Update(empUpdate1);
 
@@ -198,6 +222,8 @@ namespace MyASPCore.Repository
                         Email = "employee2@gmail.com"
                     };
                     Insert(emp2);
+
+                    InsertBatch();
 
                     scope.Complete();
                 }

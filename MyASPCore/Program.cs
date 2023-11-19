@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //menambahkan DI 
-builder.Services.AddSingleton<IEmployee, EmployeeADORepository>();
+builder.Services.AddSingleton<IEmployee, EmployeeDapperRepository>();
 
 var app = builder.Build();
 
