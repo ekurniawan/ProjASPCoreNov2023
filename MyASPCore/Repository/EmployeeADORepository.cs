@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using Microsoft.Data.SqlClient;
 using MyASPCore.Models;
 
@@ -24,7 +25,7 @@ namespace MyASPCore.Repository
         {
             using (SqlConnection conn = new SqlConnection(GetConnStr()))
             {
-                string strSql = @"delete Employees where EmployeeID=@EmployeeID";
+                string strSql = @"delete Employees where EmployeeID=@ EmployeeID";
                 SqlCommand cmd = new SqlCommand(strSql, conn);
                 cmd.Parameters.AddWithValue("@EmployeeID", id);
                 try
@@ -128,7 +129,7 @@ namespace MyASPCore.Repository
         {
             using (SqlConnection conn = new SqlConnection(GetConnStr()))
             {
-                string strSql = @"update Employees set FirstName=@FirstName,LastName=@LastName,@Email=@Email 
+                string strSql = @"update EmployeesXX set FirstName=@FirstName,LastName=@LastName,@Email=@Email 
                                   where EmployeeID=@EmployeeID";
                 SqlCommand cmd = new SqlCommand(strSql, conn);
                 cmd.Parameters.AddWithValue("@FirstName", obj.FirstName);
@@ -147,6 +148,46 @@ namespace MyASPCore.Repository
                 catch (Exception ex)
                 {
                     throw new Exception($"{ex.Message}");
+                }
+            }
+        }
+
+        public void ProcessPayroll()
+        {
+            using (TransactionScope scope = new TransactionScope())
+            {
+                try
+                {
+                    Employee emp1 = new Employee
+                    {
+                        FirstName = "Employee1",
+                        LastName = "Employee1",
+                        Email = "employee1@gmail.com"
+                    };
+                    Insert(emp1);
+
+                    Employee empUpdate1 = new Employee
+                    {
+                        FirstName = "EmployeeUpdate1",
+                        LastName = "EmployeeYpdate1",
+                        Email = "employee1@gmail.com",
+                        EmployeeID = 1
+                    };
+                    Update(empUpdate1);
+
+                    Employee emp2 = new Employee
+                    {
+                        FirstName = "Employee2",
+                        LastName = "Employee2",
+                        Email = "employee2@gmail.com"
+                    };
+                    Insert(emp2);
+
+                    scope.Complete();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
                 }
             }
         }

@@ -56,6 +56,11 @@ namespace MyASPCore.Repository
             employees.Add(obj);
         }
 
+        public void ProcessPayroll()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Employee obj)
         {
             try

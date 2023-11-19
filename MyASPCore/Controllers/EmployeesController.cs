@@ -121,6 +121,7 @@ namespace MyASPCore.Controllers
             }
         }
 
+
         public IActionResult Create()
         {
             return View();
@@ -150,6 +151,29 @@ namespace MyASPCore.Controllers
             catch (Exception ex)
             {
                 ViewData["error"] = $"<div class='alert alert-danger alert-dismissible'><button type='button' class='close' data-dismiss='alert'>&times;</button><strong>Error!</strong>{ex.Message}</div>";
+                return View();
+            }
+        }
+
+
+        public IActionResult ProcessPayroll()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("ProcessPayroll")]
+        public IActionResult ProcessPayrollPost()
+        {
+            try
+            {
+                ViewData["error"] = $"Berhasil process !";
+                _employees.ProcessPayroll();
+                return View();
+            }
+            catch (System.Exception ex)
+            {
+                ViewData["error"] = $"{ex.Message}";
                 return View();
             }
         }
