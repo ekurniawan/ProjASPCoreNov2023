@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyBackendApp.Data;
 using MyBackendApp.Repository;
@@ -12,11 +13,22 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IDepartment, DepartmentRepository>();
 
+
+
 //menambahkan EF
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.Password.RequiredLength = 8;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+}).AddDefaultTokenProviders().AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 
 var app = builder.Build();
 
