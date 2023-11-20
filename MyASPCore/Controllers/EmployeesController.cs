@@ -130,6 +130,7 @@ namespace MyASPCore.Controllers
 
         public IActionResult Create()
         {
+
             return View();
         }
 

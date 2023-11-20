@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using MyASPCore.Models;
 
 namespace MyASPCore.ViewModels
 {
@@ -24,5 +25,7 @@ namespace MyASPCore.ViewModels
         [EmailAddress]
         //[RegularExpression("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$", ErrorMessage = "Format Email tidak sesuai")]
         public string Email { get; set; } = string.Empty;
+
+        List<Department> Departments { get; set; }
     }
 }

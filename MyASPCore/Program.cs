@@ -8,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //menambahkan EF
-builder.Services.AddDbContext<ApplicationDbContext>(options=>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 //menambahkan DI 
-builder.Services.AddSingleton<IEmployee, EmployeeDapperRepository>();
+builder.Services.AddScoped<IEmployee, EmployeeEFRepository>();
 
 var app = builder.Build();
 
