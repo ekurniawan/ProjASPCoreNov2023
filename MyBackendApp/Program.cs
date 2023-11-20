@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MyBackendApp.Data;
+using MyBackendApp.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IDepartment, DepartmentRepository>();
 
 //menambahkan EF
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
