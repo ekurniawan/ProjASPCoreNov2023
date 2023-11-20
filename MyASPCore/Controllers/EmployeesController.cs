@@ -39,7 +39,9 @@ namespace MyASPCore.Controllers
                 {
                     EmployeeID = emp.EmployeeID,
                     FirstName = emp.FirstName,
-                    LastName = emp.LastName
+                    LastName = emp.LastName,
+                    Email = emp.Email,
+                    DepartmentName = emp.Department.DepartmentName
                 });
             }
             return View(models);
@@ -170,8 +172,6 @@ namespace MyASPCore.Controllers
 
                 TempData["pesan"] = $"Data Employee {employee.FirstName} has added";
                 return RedirectToAction(nameof(Index));
-                //_logger.LogInformation($"DepartmentID = {employeeCreateVM.DepartmentID}");
-
             }
             catch (Exception ex)
             {

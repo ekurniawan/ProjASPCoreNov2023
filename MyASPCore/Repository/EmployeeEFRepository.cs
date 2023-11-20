@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MyASPCore.Data;
 using MyASPCore.Models;
 
@@ -30,9 +31,9 @@ namespace MyASPCore.Repository
 
         public IEnumerable<Employee> GetAll()
         {
-            //var results = _context.Employees;
-            var results = from e in _context.Employees
-                          select e;
+            var results = _context.Employees.Include(nameof(Department));
+            /*var results = from e in _context.Employees
+                          select e;*/
             return results;
         }
 
