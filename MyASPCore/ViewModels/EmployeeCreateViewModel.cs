@@ -29,6 +29,6 @@ namespace MyASPCore.ViewModels
         //[RegularExpression("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$", ErrorMessage = "Format Email tidak sesuai")]
         public string Email { get; set; } = string.Empty;
 
-        public List<SelectListItem> Departments { get; set; }
+        public List<SelectListItem> Departments { get; set; } = new List<SelectListItem>();
     }
 }

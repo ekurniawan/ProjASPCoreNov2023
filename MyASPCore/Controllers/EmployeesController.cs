@@ -16,11 +16,13 @@ namespace MyASPCore.Controllers
     {
         private readonly IEmployee _employees;
         private readonly IDepartment _departments;
+        private readonly ILogger<EmployeesController> _logger;
 
-        public EmployeesController(IEmployee employees, IDepartment departments)
+        public EmployeesController(IEmployee employees, IDepartment departments, ILogger<EmployeesController> logger)
         {
             _employees = employees;
             _departments = departments;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -168,6 +170,8 @@ namespace MyASPCore.Controllers
 
                 TempData["pesan"] = $"Data Employee {employee.FirstName} has added";
                 return RedirectToAction(nameof(Index));
+                //_logger.LogInformation($"DepartmentID = {employeeCreateVM.DepartmentID}");
+
             }
             catch (Exception ex)
             {
