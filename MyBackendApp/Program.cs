@@ -12,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IDepartment, DepartmentRepository>();
-
+builder.Services.AddTransient<IUser, UserRepository>();
 
 
 //menambahkan EF
