@@ -1,9 +1,17 @@
+using Microsoft.EntityFrameworkCore;
+using MyASPCore.Data;
 using MyASPCore.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//menambahkan EF
+builder.Services.AddDbContext<ApplicationDbContext>(options=>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 //menambahkan DI 
 builder.Services.AddSingleton<IEmployee, EmployeeDapperRepository>();
