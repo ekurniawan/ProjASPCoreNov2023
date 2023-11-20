@@ -14,6 +14,11 @@
         }
         <form asp-action="Create">
             <div class="mb-3">
+                <select asp-for="DepartmentID" class="form-control" asp-items="@Model.Departments">
+                    <option>Please select</option>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label asp-for="FirstName" class="form-label"></label>
                 <input asp-for="FirstName" class="form-control" placeholder="Enter FirstName">
                 <span asp-validation-for="FirstName" class="text-danger"></span>

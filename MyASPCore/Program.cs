@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 //menambahkan DI 
 builder.Services.AddScoped<IEmployee, EmployeeEFRepository>();
+builder.Services.AddScoped<IDepartment, DepartmentEFRepository>();
 
 var app = builder.Build();
 

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using MyASPCore.Models;
 using MyASPCore.Repository;
@@ -14,9 +15,12 @@ namespace MyASPCore.Controllers
     public class EmployeesController : Controller
     {
         private readonly IEmployee _employees;
-        public EmployeesController(IEmployee employees)
+        private readonly IDepartment _departments;
+
+        public EmployeesController(IEmployee employees, IDepartment departments)
         {
             _employees = employees;
+            _departments = departments;
         }
 
         public IActionResult Index()
@@ -130,8 +134,17 @@ namespace MyASPCore.Controllers
 
         public IActionResult Create()
         {
-
-            return View();
+            var vm = new EmployeeCreateViewModel();
+            vm.Departments = new List<SelectListItem>();
+            foreach (var dept in _departments.GetAll())
+            {
+                vm.Departments.Add(new SelectListItem
+                {
+                    Text = dept.DepartmentName,
+                    Value = dept.DepartmentID.ToString()
+                });
+            }
+            return View(vm);
         }
 
         [HttpPost]
@@ -148,7 +161,8 @@ namespace MyASPCore.Controllers
                 {
                     FirstName = employeeCreateVM.FirstName,
                     LastName = employeeCreateVM.LastName,
-                    Email = employeeCreateVM.Email
+                    Email = employeeCreateVM.Email,
+                    DepartmentID = employeeCreateVM.DepartmentID
                 };
                 _employees.Insert(employee);
 

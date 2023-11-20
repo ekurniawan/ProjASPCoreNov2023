@@ -4,12 +4,15 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MyASPCore.Models;
 
 namespace MyASPCore.ViewModels
 {
     public class EmployeeCreateViewModel
     {
+        public int DepartmentID { get; set; }
+
         [DisplayName("First Name")]
         [Required(ErrorMessage = "FirstName tidak boleh kosong")]
         [StringLength(50)]
@@ -26,6 +29,6 @@ namespace MyASPCore.ViewModels
         //[RegularExpression("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$", ErrorMessage = "Format Email tidak sesuai")]
         public string Email { get; set; } = string.Empty;
 
-        List<Department> Departments { get; set; }
+        public List<SelectListItem> Departments { get; set; }
     }
 }
