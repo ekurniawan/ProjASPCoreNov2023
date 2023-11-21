@@ -48,5 +48,33 @@ namespace MyBackendApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPost("AddRole")]
+        public async Task<IActionResult> AddRole(RoleCreateDTO roleCreateDTO)
+        {
+            try
+            {
+                await _user.AddRole(roleCreateDTO.rolename);
+                return Ok($"Role {roleCreateDTO.rolename} created");
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("RegisterUserToRole")]
+        public async Task<IActionResult> RegisterUserToRole(string username, string rolename)
+        {
+            try
+            {
+                await _user.RegisterUserToRole(username, rolename);
+                return Ok($"Register user {username} to role {rolename}");
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

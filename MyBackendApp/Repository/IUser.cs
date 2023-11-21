@@ -11,5 +11,9 @@ namespace MyBackendApp.Repository
         Task Registration(UserCreateDto userCreateDto);
         IEnumerable<UserDto> GetAll();
         Task<UserDto> Authenticate(UserCreateDto userCreateDto);
+
+        Task AddRole(string rolename);
+        Task RegisterUserToRole(string username, string rolename);
+
     }
 }

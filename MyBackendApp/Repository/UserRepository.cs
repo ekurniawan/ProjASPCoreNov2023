@@ -16,13 +16,37 @@ namespace MyBackendApp.Repository
     public class UserRepository : IUser
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AppSettings _appSettings;
 
         public UserRepository(UserManager<IdentityUser> userManager,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _appSettings = appSettings.Value;
+        }
+
+        public async Task AddRole(string rolename)
+        {
+            try
+            {
+                IdentityResult roleResult;
+                var role = new IdentityRole(rolename);
+                var isRoleExist = await _roleManager.RoleExistsAsync(rolename);
+                if (!isRoleExist)
+                {
+                    roleResult = await _roleManager.CreateAsync(role);
+                }
+                else
+                {
+                    throw new Exception($"Role {rolename} already exist");
+                }
+            }
+            catch (System.Exception sqlEx)
+            {
+                throw new Exception(sqlEx.Message);
+            }
         }
 
         public async Task<UserDto> Authenticate(UserCreateDto userCreateDto)
@@ -36,8 +60,14 @@ namespace MyBackendApp.Repository
             {
                 Username = userCreateDto.Username
             };
+
+            var roles = await _userManager.GetRolesAsync(currUser);
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Name, userCreateDto.Username));
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -64,6 +94,19 @@ namespace MyBackendApp.Repository
                 });
             }
             return users;
+        }
+
+        public async Task RegisterUserToRole(string username, string rolename)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(username);
+                await _userManager.AddToRoleAsync(user, rolename);
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task Registration(UserCreateDto userCreateDto)
