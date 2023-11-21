@@ -18,13 +18,30 @@ namespace MyBackendApp.Controllers
             _user = user;
         }
 
-        [HttpPost]
+
+        [HttpPost("Registration")]
         public async Task<IActionResult> Registration(UserCreateDto userCreateDto)
         {
             try
             {
                 await _user.Registration(userCreateDto);
                 return Ok($"Registration User {userCreateDto.Username} success");
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Authenticate(UserCreateDto userCreateDto)
+        {
+            try
+            {
+                var user = await _user.Authenticate(userCreateDto);
+                if (user == null)
+                    return BadRequest($"Username or Password doesnt match !");
+                return Ok(user);
             }
             catch (System.Exception ex)
             {

@@ -22,6 +22,7 @@ namespace MyBackendApp.Controllers
             _departments = departments;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<DepartmentDTO>> Get()
         {
@@ -39,6 +40,7 @@ namespace MyBackendApp.Controllers
             return departmentsDto;
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<DepartmentDTO> Get(int id)
         {
