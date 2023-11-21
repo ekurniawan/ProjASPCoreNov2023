@@ -11,6 +11,7 @@ using MyBackendApp.Repository;
 
 namespace MyBackendApp.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class DepartmentsController : ControllerBase
@@ -51,6 +52,7 @@ namespace MyBackendApp.Controllers
             return departmentDto;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post(DepartmentCreateDTO departmentCreateDTO)
         {
@@ -78,7 +80,7 @@ namespace MyBackendApp.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, DepartmentCreateDTO departmentUpdateDTO)
         {
@@ -101,6 +103,8 @@ namespace MyBackendApp.Controllers
             }
         }
 
+
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
