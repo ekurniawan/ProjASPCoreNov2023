@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyASPCore.Data;
 using MyASPCore.Repository;
+using MyASPCore.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+//menggunakan HttpClient
+builder.Services.AddHttpClient();
+
 //menambahkan DI 
 builder.Services.AddScoped<IEmployee, EmployeeEFRepository>();
-builder.Services.AddScoped<IDepartment, DepartmentEFRepository>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
 var app = builder.Build();
 

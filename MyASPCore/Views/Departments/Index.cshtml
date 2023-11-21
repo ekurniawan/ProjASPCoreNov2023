@@ -1,0 +1,42 @@
+@model IEnumerable<MyASPCore.ViewModels.DepartmentViewModel>
+@{
+    ViewData["Title"] = "List Of Department";
+}
+
+<div class="row">
+    <div class="card shadow mb-4 col-md-10">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
+        </div>
+        <div class="card-body">
+            @if (ViewData["pesan"] != null)
+            {
+                @Html.Raw(ViewData["pesan"])
+            }
+
+            <a asp-action="Create" class="btn btn-primary btn-sm">Create Department</a>
+            <table class="table table-striped">
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+
+                @foreach (var dept in Model)
+                {
+                    <tr>
+                        <td>@dept.DepartmentID</td>
+                        <td>@dept.DepartmentName</td>
+                        <td><a asp-action="Edit" asp-route-id="@dept.DepartmentID" class="btn btn-warning btn-sm">edit</a>
+                        </td>
+                        <td><a asp-action="Delete" asp-route-id="@dept.DepartmentID"
+                                class="btn btn-danger btn-sm">delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+</div>

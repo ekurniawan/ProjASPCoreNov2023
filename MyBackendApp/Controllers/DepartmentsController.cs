@@ -22,7 +22,7 @@ namespace MyBackendApp.Controllers
             _departments = departments;
         }
 
-        [Authorize]
+
         [HttpGet]
         public async Task<IEnumerable<DepartmentDTO>> Get()
         {
@@ -40,7 +40,7 @@ namespace MyBackendApp.Controllers
             return departmentsDto;
         }
 
-        [Authorize]
+
         [HttpGet("{id}")]
         public async Task<DepartmentDTO> Get(int id)
         {
@@ -54,7 +54,7 @@ namespace MyBackendApp.Controllers
             return departmentDto;
         }
 
-        [Authorize]
+
         [HttpPost]
         public async Task<IActionResult> Post(DepartmentCreateDTO departmentCreateDTO)
         {
@@ -82,7 +82,7 @@ namespace MyBackendApp.Controllers
             }
         }
 
-        [Authorize]
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, DepartmentCreateDTO departmentUpdateDTO)
         {
@@ -106,7 +106,7 @@ namespace MyBackendApp.Controllers
         }
 
 
-        [Authorize]
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
