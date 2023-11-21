@@ -1,24 +1,56 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MyBackendApp.DTO;
+using MyBackendApp.Helpers;
 
 namespace MyBackendApp.Repository
 {
     public class UserRepository : IUser
     {
         private readonly UserManager<IdentityUser> _userManager;
-        public UserRepository(UserManager<IdentityUser> userManager)
+        private readonly AppSettings _appSettings;
+
+        public UserRepository(UserManager<IdentityUser> userManager,
+            IOptions<AppSettings> appSettings)
         {
             _userManager = userManager;
+            _appSettings = appSettings.Value;
         }
 
-        public Task<UserDto> Authenticate(UserCreateDto userCreateDto)
+        public async Task<UserDto> Authenticate(UserCreateDto userCreateDto)
         {
-            throw new NotImplementedException();
+            var currUser = await _userManager.FindByNameAsync(userCreateDto.Username);
+            var userResult = await _userManager.CheckPasswordAsync(currUser, userCreateDto.Password);
+            if (!userResult)
+                throw new Exception($"Authentication Failed !");
+
+            UserDto userWithToken = new UserDto
+            {
+                Username = userCreateDto.Username
+            };
+            List<Claim> claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.Name, userCreateDto.Username));
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature)
+
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            userWithToken.Token = tokenHandler.WriteToken(token);
+            return userWithToken;
         }
 
         public IEnumerable<UserDto> GetAll()
