@@ -9,7 +9,7 @@ namespace MyBackendApp.Repository
     public interface IUser
     {
         Task Registration(UserCreateDto userCreateDto);
-        Task<IEnumerable<UserDto>> GetAll();
+        IEnumerable<UserDto> GetAll();
         Task<UserDto> Authenticate(UserCreateDto userCreateDto);
     }
 }

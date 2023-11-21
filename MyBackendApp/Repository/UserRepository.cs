@@ -21,9 +21,17 @@ namespace MyBackendApp.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<UserDto>> GetAll()
+        public IEnumerable<UserDto> GetAll()
         {
-            throw new NotImplementedException();
+            var users = new List<UserDto>();
+            foreach (var user in _userManager.Users)
+            {
+                users.Add(new UserDto
+                {
+                    Username = user.UserName
+                });
+            }
+            return users;
         }
 
         public async Task Registration(UserCreateDto userCreateDto)

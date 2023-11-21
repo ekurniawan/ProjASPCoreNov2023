@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBackendApp.DTO;
 using MyBackendApp.Models;
@@ -75,6 +77,7 @@ namespace MyBackendApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, DepartmentCreateDTO departmentUpdateDTO)
