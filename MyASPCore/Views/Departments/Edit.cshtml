@@ -1,0 +1,35 @@
+@model MyASPCore.ViewModels.DepartmentViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="card shadow mb-4 col-md-6">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Edit Department</h6>
+    </div>
+    <div class="card-body">
+        @if (ViewData["error"] != null)
+        {
+            @Html.Raw(ViewData["error"])
+        }
+        <form asp-action="Edit">
+            <div class="mb-3">
+                <label asp-for="DepartmentID" class="form-label">Department ID:</label>
+                <input asp-for="DepartmentID" class="form-control" readonly>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DepartmentName" class="form-label"></label>
+                <input asp-for="DepartmentName" class="form-control" placeholder="Department Name">
+                <span asp-validation-for="DepartmentName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,32 @@
+@model MyASPCore.ViewModels.DepartmentCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="card shadow mb-4 col-md-6">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Create Department</h6>
+    </div>
+    <div class="card-body">
+        @if (ViewData["error"] != null)
+        {
+            @Html.Raw(ViewData["error"])
+        }
+        <form asp-action="Create">
+            <div class="mb-3">
+                <label asp-for="DepartmentName" class="form-label"></label>
+                <input asp-for="DepartmentName" class="form-control" placeholder="Enter Department Name">
+                <span asp-validation-for="DepartmentName" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
